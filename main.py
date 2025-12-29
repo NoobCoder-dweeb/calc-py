@@ -31,7 +31,7 @@ def modulus[T: (int, float)](x: T, y: T) -> float | T:
 type Function = Union[
     Callable[[int | float, int | float], int],
     Callable[[int | float, int | float], float],
-    Callable[[int | float, int | float], Any],
+    Callable[[int | float, int | float], None],
 ]
 
 operators: Dict[str, Function] = {
@@ -47,23 +47,26 @@ def main():
     print("=" * 50)
     print("PY CALCULATOR")
     print("=" * 50)
-    try:
-        x: float = float(input(" Number 1 >"))
-        y: float = float(input(" Number 2 >"))
-        # remove white spaces and only take the first value
-        operator = str(input(" Operator (+,-,*,/,%) > ")).strip()[0]
+    while True:
+        try:
+            x: float = float(input(" Number 1> "))
+            y: float = float(input(" Number 2> "))
+            # remove white spaces and only take the first value
+            operator = str(input(" Operator (+,-,*,/,%) > ")).strip()[0]
 
-        func = operators.get(operator, None)
+            func = operators.get(operator, None)
 
-        if not func:
-            raise ValueError("Invalid operator.")
+            if not func:
+                raise ValueError("Invalid operator.")
 
-        result = func(x, y)
+            result = func(x, y)
 
-        print(f"\n{x: .2f} {operator} {y: .2f} = {result: .2f}\n")
-
-    except Exception as e:
-        print(f" X ERROR: {e}")
+            print(f"\n{x: .2f} {operator} {y: .2f} = {result: .2f}\n")
+        except KeyboardInterrupt:
+            print("Exiting...")
+            exit(0)
+        except Exception as e:
+            print(f" X ERROR: {e}")
 
 
 if __name__ == "__main__":
